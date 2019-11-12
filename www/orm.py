@@ -110,6 +110,7 @@ class ModelMetaclass(type):
                     #找到主键
                     if primaryKey:
                         raise Exception('Duplicate primary key for field : %s' %k)
+                    primaryKey = k
                 else:
                     fields.append(k)
         if not primaryKey:
@@ -156,7 +157,7 @@ class Model(dict, metaclass=ModelMetaclass):
 
     @classmethod
     async def findAll(cls,where=None,args=None,**kw):
-        ' find objects by where clause. '
+        ''' find objects by where clause. '''
         sql = [cls.__select__ ]
         if where:
             sql.append('where')
